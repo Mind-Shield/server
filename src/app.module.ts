@@ -6,12 +6,16 @@ import { AuthModule } from './auth/auth.module';
 import { AtGuard } from './common/guards';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
+import { ClassModule } from './class/class.module';
+import { MLModule } from './ml/ml.module';
 
 @Module({
   imports: [
     PrismaModule,
     AuthModule,
     UserModule,
+    ClassModule,
+    MLModule,
     ConfigModule.forRoot({ isGlobal: true }),
   ],
   providers: [{ provide: APP_GUARD, useClass: AtGuard }],

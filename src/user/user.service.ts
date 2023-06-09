@@ -19,7 +19,7 @@ export class UserService {
         score: true,
         ra: true,
         Answers: { select: { id: true } },
-        Class: { select: { id: true } },
+        UserClass: { select: { id: true, userID: true, classID: true } },
         MachineLearning: { select: { id: true } },
       },
     });
@@ -36,9 +36,9 @@ export class UserService {
         email: true,
         score: true,
         ra: true,
-        // Answers: { select: { id: true } },
-        // Class: { select: { id: true } },
-        // MachineLearning: { select: { id: true } },
+        Answers: { select: { id: true, userID: true, machineLearningID: true, question: true, response: true } },
+        UserClass: { select: { id: true, userID: true, classID: true } },
+        MachineLearning: { select: { id: true, userID: true, typeOfTest: true, results: true, dateTest: true } },
       },
     });
     return user;
@@ -54,9 +54,9 @@ export class UserService {
         email: true,
         score: true,
         ra: true,
-        // Answers: { select: { id: true } },
-        // Class: { select: { id: true } },
-        // MachineLearning: { select: { id: true } },
+        Answers: { select: { id: true, userID: true, machineLearningID: true, question: true, response: true } },
+        UserClass: { select: { id: true, userID: true, classID: true } },
+        MachineLearning: { select: { id: true, userID: true, typeOfTest: true, results: true, dateTest: true } },
       },
     });
     return user;
@@ -72,9 +72,9 @@ export class UserService {
         email: true,
         score: true,
         ra: true,
-        // Answers: { select: { id: true } },
-        // Class: { select: { id: true } },
-        // MachineLearning: { select: { id: true } },
+        Answers: { select: { id: true, userID: true, machineLearningID: true, question: true, response: true } },
+        UserClass: { select: { id: true, userID: true, classID: true } },
+        MachineLearning: { select: { id: true, userID: true, typeOfTest: true, results: true, dateTest: true } },
       },
     });
     return responsibleUsers;
@@ -92,7 +92,8 @@ export class UserService {
     return deletedUser;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(id: string, newData: string): Promise<User> {
+    await this.prisma.user.update({ where: { id }, data: newData})
     return;
   }
 }

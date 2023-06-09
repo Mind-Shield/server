@@ -62,8 +62,8 @@ export class UserController {
   @ApiBearerAuth()
   async update(
     @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() newData: string,
   ): Promise<User> {
-    return await this.userService.update(id, updateUserDto);
+    return await this.userService.update(id, newData);
   }
 }

@@ -20,8 +20,8 @@ model User {
   updatedAt       DateTime          @updatedAt
   hashedRt        String?
   Answers         Answers[]
-  Class           Class[]
   MachineLearning MachineLearning[]
+  UserClass       UserClass[]
 
   @@map("users")
 }
@@ -58,12 +58,21 @@ model Tests {
   grade      String @default("")
 }
 
-model Class {
-  id         String @id @default(uuid())
-  identifier String @default("")
-  userID     String @default("")
-  grade      String @default("")
-  user       User   @relation(fields: [userID], references: [id], onDelete: Cascade)
+model UserClass {
+  id      String @id @default(uuid())
+  userID  String
+  classID String
 
-  @@index([userID], map: "Class_userID_fkey")
+  user  User  @relation(fields: [userID], references: [id], onDelete: Cascade)
+  class Class @relation(fields: [classID], references: [id], onDelete: Cascade)
+
+  @@index([userID], map: "UserClass_userID_fkey")
+  @@index([classID], map: "UserClass_classID_fkey")
+}
+
+model Class {
+  id         String      @id @default(uuid())
+  identifier String      @default("")
+  grade      String      @default("")
+  UserClass  UserClass[]
 }

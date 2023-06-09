@@ -2,7 +2,7 @@
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { CaslAbilityFactory } from '../casl/casl-ability.factory/casl-ability.factory';
-import { Action } from '../enums/role.enum';
+import { Action } from '../casl/enums/role.enum';
 import { PrismaService } from '../prisma/prisma.service';
 import { User } from '../user/entities/user.entity';
 
