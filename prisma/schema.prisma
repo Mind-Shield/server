@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String            @id @default(uuid())
+  name            String
+  responsible     Boolean           @default(false)
+  email           String            @unique
+  hashedPassword  String
+  score           Int?              @default(0)
+  ra              String            @default("")
+  firstLogin      Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  hashedRt        String?
+  Answers         Answers[]
+  Class           Class[]
+  MachineLearning MachineLearning[]
+
+  @@map("users")
+}
+
+model Answers {
+  id                String          @id @default(uuid())
+  userID            String
+  machineLearningID String
+  question          String          @default("")
+  response          String          @default("")
+  MachineLearning   MachineLearning @relation(fields: [machineLearningID], references: [id], onDelete: Cascade)
+  user              User            @relation(fields: [userID], references: [id], onDelete: Cascade)
+
+  @@index([userID], map: "Answers_userID_fkey")
+  @@index([machineLearningID], map: "Answers_machineLearningID_fkey")
+}
+
+model MachineLearning {
+  id         String    @id @default(uuid())
+  userID     String
+  typeOfTest String    @default("")
+  results    String    @default("")
+  dateTest   DateTime  @default(now())
+  Answers    Answers[]
+  user       User      @relation(fields: [userID], references: [id], onDelete: Cascade)
+
+  @@index([userID], map: "MachineLearning_userID_fkey")
+}
+
+model Tests {
+  id         String @id @default(uuid())
+  typeOfTest String @default("")
+  question   String @default("")
+  grade      String @default("")
+}
+
+model Class {
+  id         String @id @default(uuid())
+  identifier String @default("")
+  userID     String @default("")
+  grade      String @default("")
+  user       User   @relation(fields: [userID], references: [id], onDelete: Cascade)
+
+  @@index([userID], map: "Class_userID_fkey")
+}
