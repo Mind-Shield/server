@@ -69,3 +69,9 @@ email: vinicios@gmail.com <br>
 senha: mortadela <br>
 
 Quando executar o endpoint, ele irá devolver um `access_token`. Com isso basta apenas copiar e colar esse acces_token no botão de `Authorize` no topo da página e todos os endpoints estarão liberados.
+
+
+## License
+
+Distributed under the MIT License. See [License](https://github.com/Mind-Shield/server/blob/main/LICENSE) for more information.
+
