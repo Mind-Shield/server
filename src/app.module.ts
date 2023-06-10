@@ -8,6 +8,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { ClassModule } from './class/class.module';
 import { MLModule } from './ml/ml.module';
+import { TestsModule } from './tests/tests.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { MLModule } from './ml/ml.module';
     UserModule,
     ClassModule,
     MLModule,
+    TestsModule,
     ConfigModule.forRoot({ isGlobal: true }),
   ],
   providers: [{ provide: APP_GUARD, useClass: AtGuard }],
