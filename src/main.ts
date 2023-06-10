@@ -17,9 +17,9 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('LearnLink Endpoints')
+    .setTitle('MindShield Endpoints')
     .setDescription(
-      'These are the routes that make up the backend of LearnLink application',
+      'These are the routes that make up the backend of MindShield application',
     )
     .setVersion('1.0')
     .addBearerAuth()
