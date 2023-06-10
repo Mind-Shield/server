@@ -96,4 +96,22 @@ export class UserService {
     await this.prisma.user.update({ where: { id }, data: newData})
     return;
   }
+
+  async getAllUsersRanking() {
+    const users = await this.prisma.user.findMany({
+      orderBy: { score: 'desc' },
+      select: {
+        id: true,
+        name: true,
+        responsible: true,
+        email: true,
+        score: true,
+        ra: true,
+        Answers: { select: { id: true } },
+        UserClass: { select: { id: true, userID: true, classID: true } },
+        MachineLearning: { select: { id: true } },
+      },
+    });
+    return users;
+  }
 }

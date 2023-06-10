@@ -66,4 +66,10 @@ export class UserController {
   ): Promise<User> {
     return await this.userService.update(id, newData);
   }
+
+  @Get('/ranking')
+  @ApiBearerAuth()
+  async getAllUsersRanking() {
+    return this.userService.getAllUsersRanking();
+  }
 }

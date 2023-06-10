@@ -11,6 +11,52 @@ export class MLService {
   constructor(private readonly prisma: PrismaService) {
   }
 
+  async getAllMl() {
+    const getMl = await this.prisma.machineLearning.findMany({
+      select: {
+        id: true,
+        typeOfTest: true,
+        results: true,
+        dateTest: true,
+        userID: true,
+        user: { select: { id: true, name: true, email: true, score: true, ra: true, createdAt: true, UserClass: true  } },
+      },
+    });
+    return getMl;
+  }
+
+  async findOneMl(Mlid: string) {
+    const getMl = await this.prisma.machineLearning.findMany({
+      where: { id: Mlid },
+      select: {
+        id: true,
+        typeOfTest: true,
+        results: true,
+        dateTest: true,
+        userID: true,
+        Answers: true,
+        user: { select: { id: true, name: true, email: true, score: true, ra: true, createdAt: true, UserClass: true  } },
+      },
+    });
+    return getMl;
+  }
+
+  async findMlByUser(userId: string) {
+    const getMl = await this.prisma.machineLearning.findMany({
+      where: { userID: userId },
+      select: {
+        id: true,
+        typeOfTest: true,
+        results: true,
+        dateTest: true,
+        userID: true,
+        Answers: true,
+        user: { select: { id: true, name: true, email: true, score: true, ra: true, createdAt: true, UserClass: true  } },
+      },
+    });
+    return getMl;
+  }
+
   async predict(userId: string, dto: CreateMlDto){
     let medResponse;
     let resultsMl = "";
