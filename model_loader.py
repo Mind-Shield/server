@@ -20,4 +20,6 @@ for i in range(0,len(data)):
    previsao.append(modelo.predict(data[i]))
    classe_predita.append(np.argmax(previsao[i]))
 
+
+classe_predita = sum(classe_predita)
 print(classe_predita)

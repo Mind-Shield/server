@@ -12,8 +12,7 @@ export class MLService {
   }
 
   async predict(userId: string, dto: CreateMlDto){
-    let arrayRespostas = [];
-    let soma = 0;
+    let medResponse;
     let resultsMl = "";
 
     const options = {
@@ -24,21 +23,18 @@ export class MLService {
       console.log('finished python 2');
       messages = messages[messages.length - 1];
       console.log('results: %j', messages);
-      arrayRespostas = messages;
+      medResponse = messages;
     })
 
-    for(let i = 0; i < arrayRespostas.length; i++) {
-      soma += arrayRespostas[i];
-    }
-    console.log(soma);
+    medResponse = parseInt(medResponse)
 
-    if(soma == 5){
+    if(medResponse == 5){
       resultsMl = "Atenção imediata"
-    }else if(soma == 4){
+    }else if(medResponse == 4){
       resultsMl = "Sugerir ajuda psicologica"
-    } else if(soma == 3 || soma == 2){
+    } else if(medResponse == 3 || medResponse == 2){
       resultsMl = "Manter em observação"
-    } else if(soma == 1 || soma == 0){
+    } else if(medResponse == 1 || medResponse == 0){
       resultsMl = "Positivamente bem"
     }
     
