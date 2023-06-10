@@ -11,6 +11,7 @@ import { PrismaService } from '../prisma/prisma.service';
 
 import { AuthDto, AuthLoginDto } from './dto';
 import { JwtPayload, Tokens } from './types';
+import { use } from 'passport';
 
 @Injectable()
 export class AuthService {
@@ -49,7 +50,7 @@ export class AuthService {
         throw error;
       });
 
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.responsible);
     await this.updateRtHash(user.id, tokens.refresh_token);
 
     return tokens;
@@ -76,7 +77,7 @@ export class AuthService {
         'E-mail or password does not exist. Access Denied!',
       );
 
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.responsible);
     await this.updateRtHash(user.id, tokens.refresh_token);
 
     return tokens;
@@ -108,7 +109,7 @@ export class AuthService {
     const rtMatches = await argon.verify(user.hashedRt, rt);
     if (!rtMatches) throw new ForbiddenException('Access Denied');
 
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.responsible);
     await this.updateRtHash(user.id, tokens.refresh_token);
 
     return tokens;
@@ -126,7 +127,11 @@ export class AuthService {
     });
   }
 
-  async getTokens(userId: string, email: string): Promise<Tokens> {
+  async getTokens(
+    userId: string,
+    email: string,
+    responsible: boolean,
+  ): Promise<Tokens> {
     const jwtPayload: JwtPayload = {
       sub: userId,
       email: email,
@@ -147,6 +152,7 @@ export class AuthService {
       access_token: at,
       refresh_token: rt,
       userId: userId,
+      responsible: responsible,
     };
   }
 }
